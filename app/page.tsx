@@ -3,7 +3,6 @@
 import { useChat } from "@ai-sdk/react";
 import { useState } from "react";
 import {
-  useTelegramViewport,
   useTelegramHaptic,
   useIsInTelegram,
 } from "@/lib/telegram/hooks";
@@ -33,7 +32,6 @@ export default function ChatPage() {
 
   // Telegram hooks
   const isInTelegram = useIsInTelegram();
-  const { height } = useTelegramViewport();
   const { impactLight, notificationSuccess, notificationError } = useTelegramHaptic();
 
   const handleSubmit = (message: PromptInputMessage) => {
@@ -60,16 +58,7 @@ export default function ChatPage() {
   };
 
   return (
-    <div
-      className="flex flex-col"
-      style={isInTelegram && height ? { height: `${height}px` } : { height: "calc(100vh - 4rem)" }}
-    >
-      {/* Header */}
-      <header className="sticky top-0 z-10 flex items-center justify-between border-b bg-background px-4 py-3">
-        <h1 className="text-lg font-semibold">Goose AI 🦆</h1>
-        <span className="text-sm text-muted-foreground">Beta</span>
-      </header>
-
+    <div className="flex flex-col flex-1 min-h-0">
       {/* Conversation */}
       <Conversation className="flex-1">
         <ConversationContent>

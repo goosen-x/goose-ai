@@ -4,6 +4,8 @@ import Script from "next/script";
 import "./globals.css";
 import { TelegramProvider } from "@/components/telegram/telegram-provider";
 import { TelegramThemeSync } from "@/components/telegram/telegram-theme-sync";
+import { SafeAreaProvider } from "@/components/shared/safe-area-provider";
+import { Header } from "@/components/shared/header";
 import { BottomNav } from "@/components/shared/bottom-nav";
 
 const raleway = Raleway({ subsets: ["latin"], variable: "--font-sans" });
@@ -20,13 +22,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Goose AI - AI Assistant in Telegram",
-  description: "Chat with AI models powered by Cocoon Network",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-  },
+  description: "Chat with AI models powered by Groq LLaMA 3.3 70B",
 };
 
 export default function RootLayout({
@@ -35,8 +31,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" className={`${raleway.variable} dark`}>
+    <html lang="ru" className={`${raleway.variable} dark`} suppressHydrationWarning>
       <head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+        />
         <Script
           src="https://telegram.org/js/telegram-web-app.js"
           strategy="beforeInteractive"
@@ -44,11 +44,17 @@ export default function RootLayout({
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning
       >
         <TelegramProvider>
           <TelegramThemeSync />
-          <main className="min-h-screen pb-16">{children}</main>
-          <BottomNav />
+          <SafeAreaProvider>
+            <Header />
+            <main className="flex flex-1 flex-col min-h-0">
+              {children}
+            </main>
+            <BottomNav />
+          </SafeAreaProvider>
         </TelegramProvider>
       </body>
     </html>
