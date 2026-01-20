@@ -4,7 +4,6 @@ import Script from "next/script";
 import "./globals.css";
 import { TelegramProvider } from "@/components/telegram/telegram-provider";
 import { TelegramThemeSync } from "@/components/telegram/telegram-theme-sync";
-import { ErudaDebugger } from "@/components/shared/eruda-debugger";
 import { BottomNav } from "@/components/shared/bottom-nav";
 
 const raleway = Raleway({ subsets: ["latin"], variable: "--font-sans" });
@@ -46,7 +45,6 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ErudaDebugger />
         <TelegramProvider>
           <TelegramThemeSync />
           <main className="min-h-screen pb-16">{children}</main>
