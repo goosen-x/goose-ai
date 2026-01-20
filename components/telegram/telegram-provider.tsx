@@ -31,10 +31,7 @@ interface TelegramProviderProps {
 function DefaultLoadingComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center">
-      <div className="flex flex-col items-center gap-1rem">
-        <div className="h-2rem w-2rem animate-spin rounded-full border-0.25rem border-primary border-t-transparent" />
-        <p className="text-muted-foreground">Загрузка Telegram...</p>
-      </div>
+      <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
     </div>
   )
 }
