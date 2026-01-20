@@ -122,12 +122,7 @@ export function TelegramProvider({
     return <>{loadingComponent || <DefaultLoadingComponent />}</>
   }
 
-  // Не в Telegram
-  if (!isInTelegram) {
-    return <>{notInTelegramComponent || <DefaultNotInTelegramComponent />}</>
-  }
-
-  // Всё готово, рендерим приложение
+  // Всё готово, рендерим приложение (работает и в Telegram, и в браузере)
   const contextValue: TelegramContextValue = {
     sdk,
     user,

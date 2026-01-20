@@ -5,6 +5,7 @@ import "./globals.css";
 import { TelegramProvider } from "@/components/telegram/telegram-provider";
 import { TelegramThemeSync } from "@/components/telegram/telegram-theme-sync";
 import { ErudaDebugger } from "@/components/shared/eruda-debugger";
+import { ConditionalBottomNav } from "@/components/shared/conditional-bottom-nav";
 
 const raleway = Raleway({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -42,7 +43,8 @@ export default function RootLayout({
         <ErudaDebugger />
         <TelegramProvider>
           <TelegramThemeSync />
-          <main className="min-h-screen">{children}</main>
+          <main className="min-h-screen pb-16">{children}</main>
+          <ConditionalBottomNav />
         </TelegramProvider>
       </body>
     </html>

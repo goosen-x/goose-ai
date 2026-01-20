@@ -7,6 +7,7 @@ import {
   useTelegramBackButton,
   useTelegramHaptic,
   useTelegramMiniApp,
+  useIsInTelegram,
 } from "@/lib/telegram/hooks";
 import {
   Conversation,
@@ -33,13 +34,16 @@ export default function ChatPage() {
   const { messages, sendMessage, status } = useChat();
 
   // Telegram hooks
+  const isInTelegram = useIsInTelegram();
   const { height } = useTelegramViewport();
   const { show: showBackButton, onClick: onBackClick } = useTelegramBackButton();
   const { impactLight, notificationSuccess, notificationError } = useTelegramHaptic();
   const { close } = useTelegramMiniApp();
 
-  // Настройка back button
+  // Настройка back button (только в Telegram)
   useEffect(() => {
+    if (!isInTelegram) return;
+
     showBackButton();
     const unsubscribe = onBackClick(() => {
       // При нажатии на кнопку Назад закрываем Mini App
@@ -47,7 +51,7 @@ export default function ChatPage() {
     });
 
     return unsubscribe;
-  }, [showBackButton, onBackClick, close]);
+  }, [isInTelegram, showBackButton, onBackClick, close]);
 
   const handleSubmit = (message: PromptInputMessage) => {
     const hasText = Boolean(message.text);
@@ -56,23 +60,35 @@ export default function ChatPage() {
       return;
     }
 
-    // Haptic feedback при отправке
-    impactLight();
+    // Haptic feedback при отправке (только в Telegram)
+    if (isInTelegram) {
+      impactLight();
+    }
 
     sendMessage({ text: message.text || "" });
     setInput("");
 
-    // Haptic успеха после отправки
-    setTimeout(() => {
-      notificationSuccess();
-    }, 100);
+    // Haptic успеха после отправки (только в Telegram)
+    if (isInTelegram) {
+      setTimeout(() => {
+        notificationSuccess();
+      }, 100);
+    }
   };
 
   return (
     <div
       className="flex flex-col"
-      style={{ height: height ? `${height}px` : "100vh" }}
+      style={isInTelegram && height ? { height: `${height}px` } : { height: "calc(100vh - 4rem)" }}
     >
+      {/* Header - показываем только в браузере */}
+      {!isInTelegram && (
+        <header className="flex items-center justify-between border-b px-4 py-3">
+          <h1 className="text-lg font-semibold">Goose AI 🦆</h1>
+          <span className="text-sm text-muted-foreground">Beta</span>
+        </header>
+      )}
+
       {/* Conversation */}
       <Conversation className="flex-1">
         <ConversationContent>
