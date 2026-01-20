@@ -58,7 +58,6 @@ export async function POST(req: Request) {
       model: groq('llama-3.3-70b-versatile'),
       messages: modelMessages,
       temperature: 0.7,
-      maxTokens: 2000,
     });
 
     return result.toUIMessageStreamResponse();
