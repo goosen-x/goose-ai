@@ -7,7 +7,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { useTelegramTheme } from '@/lib/telegram/hooks'
+import { useTelegramTheme, useTelegramViewport } from '@/lib/telegram/hooks'
 import { applyTelegramTheme, isTelegramDarkTheme } from '@/lib/telegram/theme'
 
 /**
@@ -16,6 +16,7 @@ import { applyTelegramTheme, isTelegramDarkTheme } from '@/lib/telegram/theme'
  */
 export function TelegramThemeSync() {
   const themeParams = useTelegramTheme()
+  const { height, stableHeight } = useTelegramViewport()
 
   useEffect(() => {
     if (!themeParams) return
@@ -45,6 +46,16 @@ export function TelegramThemeSync() {
       })
     }
   }, [themeParams])
+
+  // Sync viewport CSS variables to fix hydration mismatch
+  useEffect(() => {
+    if (height) {
+      document.documentElement.style.setProperty('--tg-viewport-height', `${height}px`)
+    }
+    if (stableHeight) {
+      document.documentElement.style.setProperty('--tg-viewport-stable-height', `${stableHeight}px`)
+    }
+  }, [height, stableHeight])
 
   // Этот компонент не рендерит UI
   return null
