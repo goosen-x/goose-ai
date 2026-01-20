@@ -124,3 +124,46 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Telegram Mini App specific styles */
+:root.telegram-theme {
+  /* Telegram theme переменные устанавливаются динамически через JavaScript */
+  /* См. TelegramThemeSync компонент */
+}
+
+/* Utility для viewport height из Telegram */
+.h-telegram-viewport {
+  height: var(--tg-viewport-height, 100vh);
+}
+
+.min-h-telegram-viewport {
+  min-height: var(--tg-viewport-height, 100vh);
+}
+
+/* Telegram-specific adjustments для более нативного ощущения */
+.telegram-theme {
+  /* Убираем стандартное выделение при тапе на iOS */
+  -webkit-tap-highlight-color: transparent;
+
+  /* Запрещаем выделение текста (как в нативных приложениях) */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  /* Запрещаем callout меню на iOS */
+  -webkit-touch-callout: none;
+}
+
+/* Разрешаем выделение для текстовых полей и сообщений */
+.telegram-theme input,
+.telegram-theme textarea,
+.telegram-theme [contenteditable],
+.telegram-theme [data-selectable="true"] {
+  -webkit-user-select: auto;
+  -moz-user-select: auto;
+  -ms-user-select: auto;
+  user-select: auto;
+}
+
+@source '../node_modules/@llamaindex/chat-ui/**/*.{ts,tsx}';

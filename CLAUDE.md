@@ -2,6 +2,14 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Important Rules
+
+**НИКОГДА не запускай dev сервер (pnpm dev, npm run dev и т.д.). Только пользователь запускает сервер.**
+
+**НИКОГДА не запускай команды без явного разрешения пользователя.**
+
+**ВСЕ markdown файлы документации (.md) ВСЕГДА сохранять ТОЛЬКО в папку `docs/`. НЕ создавать markdown файлы в корне проекта.**
+
 ## Project Overview
 
 Next.js 16 application using App Router, React 19, TypeScript, and Tailwind CSS v4. Uses shadcn/ui components (radix-lyra style) with Lucide icons.
