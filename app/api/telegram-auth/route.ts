@@ -7,8 +7,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { validateTelegramInitData, createSessionToken } from '@/lib/telegram/validate'
 
-export const runtime = 'edge'
-
 /**
  * POST /api/telegram-auth
  *

@@ -73,20 +73,20 @@ export async function validateTelegramInitData(
     // Извлечение пользователя
     const user = initData.user
       ? {
-          id: initData.user.id,
-          firstName: initData.user.firstName,
-          lastName: initData.user.lastName,
-          username: initData.user.username,
-          photoUrl: initData.user.photoUrl,
-          isPremium: initData.user.isPremium,
-          languageCode: initData.user.languageCode
+          id: initData.user.id as number,
+          firstName: initData.user.firstName as string,
+          lastName: initData.user.lastName as string | undefined,
+          username: initData.user.username as string | undefined,
+          photoUrl: initData.user.photoUrl as string | undefined,
+          isPremium: initData.user.isPremium as boolean | undefined,
+          languageCode: initData.user.languageCode as string | undefined
         }
       : undefined
 
     return {
       valid: true,
       user,
-      authDate: initData.authDate ? initData.authDate.getTime() / 1000 : undefined
+      authDate: initData.authDate ? (initData.authDate as Date).getTime() / 1000 : undefined
     }
   } catch (error) {
     console.error('[Telegram Validation] Error:', error)
