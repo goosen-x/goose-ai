@@ -96,9 +96,6 @@ importers:
       '@types/react-dom':
         specifier: ^19
         version: 19.2.3(@types/react@19.2.9)
-      eruda:
-        specifier: ^3.4.3
-        version: 3.4.3
       eslint:
         specifier: ^9
         version: 9.39.2(jiti@2.6.1)
@@ -2232,9 +2229,6 @@ packages:
 
   error-kid@1.0.2:
     resolution: {integrity: sha512-Xvq0ZrY/azCbREWKt9E/3mXDF0MkuEVVvHnOKutUhtq2O8pyneEixQ4nSFkA19Xfn+/OVSg//iVG0dxIDj7DIA==}
-
-  eruda@3.4.3:
-    resolution: {integrity: sha512-J2TsF4dXSspOXev5bJ6mljv0dRrxj21wklrDzbvPmYaEmVoC+2psylyRi70nUPFh1mTQfIBsSusUtAMZtUN+/w==}
 
   es-abstract@1.24.1:
     resolution: {integrity: sha512-zHXBLhP+QehSSbsS9Pt23Gg964240DPd6QCf8WpkqEXxQ7fhdZzYsocOr5u7apWonsS5EjZDmTF+/slGMyasvw==}
@@ -6478,8 +6472,6 @@ snapshots:
   error-kid@0.0.7: {}
 
   error-kid@1.0.2: {}
-
-  eruda@3.4.3: {}
 
   es-abstract@1.24.1:
     dependencies:
