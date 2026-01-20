@@ -3,7 +3,6 @@ import { Geist, Geist_Mono, Raleway } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { TelegramProvider } from "@/components/telegram/telegram-provider";
-import { TelegramThemeSync } from "@/components/telegram/telegram-theme-sync";
 import { SafeAreaProvider } from "@/components/shared/safe-area-provider";
 import { Header } from "@/components/shared/header";
 import { BottomNav } from "@/components/shared/bottom-nav";
@@ -47,7 +46,6 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <TelegramProvider>
-          <TelegramThemeSync />
           <SafeAreaProvider>
             <Header />
             <main className="flex flex-1 flex-col min-h-0">
