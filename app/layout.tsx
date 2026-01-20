@@ -31,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" className={`${raleway.variable} dark`} suppressHydrationWarning>
+    <html lang="ru" className={raleway.variable} suppressHydrationWarning>
       <head>
         <meta
           name="viewport"

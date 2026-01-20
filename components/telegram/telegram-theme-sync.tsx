@@ -16,11 +16,6 @@ import { useTelegramViewport } from '@/lib/telegram/hooks'
 export function TelegramThemeSync() {
   const { height, stableHeight } = useTelegramViewport()
 
-  useEffect(() => {
-    // Всегда используем тёмную тему
-    document.documentElement.classList.add('dark')
-  }, [])
-
   // Sync viewport CSS variables to fix hydration mismatch
   useEffect(() => {
     if (height) {
