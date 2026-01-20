@@ -90,7 +90,8 @@ export default function ChatPage() {
       </Conversation>
 
       {/* Input */}
-      <PromptInput onSubmit={handleSubmit} className="mx-2 mb-2 mt-0">
+      <div className="shrink-0 px-4 pb-4">
+        <PromptInput onSubmit={handleSubmit}>
         <PromptInputBody>
           <PromptInputTextarea
             onChange={(e) => setInput(e.target.value)}
@@ -101,7 +102,8 @@ export default function ChatPage() {
         <PromptInputFooter>
           <PromptInputSubmit disabled={!input && !status} status={status} />
         </PromptInputFooter>
-      </PromptInput>
+        </PromptInput>
+      </div>
     </div>
   );
 }
