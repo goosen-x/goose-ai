@@ -1,43 +1,25 @@
 /**
  * Telegram Theme Sync
  *
- * Синхронизация темы Telegram с CSS переменными приложения
+ * Только viewport sync, без применения Telegram темы
  */
 
 'use client'
 
 import { useEffect } from 'react'
-import { useTelegramTheme, useTelegramViewport } from '@/lib/telegram/hooks'
-import { applyTelegramTheme } from '@/lib/telegram/theme'
+import { useTelegramViewport } from '@/lib/telegram/hooks'
 
 /**
- * Компонент для синхронизации темы Telegram
- * Применяет цвета из Telegram к CSS переменным приложения
+ * Компонент для синхронизации viewport Telegram
+ * Не применяет цвета - только тёмная тема из CSS
  */
 export function TelegramThemeSync() {
-  const themeParams = useTelegramTheme()
   const { height, stableHeight } = useTelegramViewport()
 
   useEffect(() => {
-    if (!themeParams) return
-
-    // Применяем тему Telegram к CSS
-    applyTelegramTheme(themeParams)
-
     // Всегда используем тёмную тему
     document.documentElement.classList.add('dark')
-
-    // Debug logging в development
-    if (process.env.NODE_ENV === 'development') {
-      console.log('[TelegramThemeSync] Theme applied (dark mode forced):', {
-        colors: {
-          bg: themeParams.bgColor,
-          text: themeParams.textColor,
-          button: themeParams.buttonColor
-        }
-      })
-    }
-  }, [themeParams])
+  }, [])
 
   // Sync viewport CSS variables to fix hydration mismatch
   useEffect(() => {
