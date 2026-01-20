@@ -30,9 +30,7 @@ import {
 
 export default function ChatPage() {
   const [input, setInput] = useState("");
-  const { messages, sendMessage, status } = useChat({
-    api: "/api/chat",
-  });
+  const { messages, sendMessage, status } = useChat();
 
   // Telegram hooks
   const { height } = useTelegramViewport();
