@@ -1,6 +1,5 @@
 import { streamText, UIMessage } from 'ai';
 import { groq } from '@ai-sdk/groq';
-import { validateTelegramRequest } from '@/lib/telegram/validate';
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
@@ -12,27 +11,39 @@ export const maxDuration = 30;
  */
 export async function POST(req: Request) {
   try {
+    // Read body once to avoid "Body is unusable" error
+    const body = await req.json();
+    const messages: UIMessage[] = body.messages;
+
     // Опциональная валидация Telegram (для отслеживания пользователей)
     // В будущем можно сделать обязательной для безопасности
     let telegramUserId: number | undefined;
 
-    const validation = await validateTelegramRequest(req);
-    if (validation.valid && validation.user) {
-      telegramUserId = validation.user.id;
+    // Try to validate from header first
+    const initDataFromHeader = req.headers.get('X-Telegram-Init-Data');
+    const initDataToValidate = initDataFromHeader || body.initData;
 
-      if (process.env.NODE_ENV === 'development') {
-        console.log('[Chat] Request from Telegram user:', {
-          id: validation.user.id,
-          username: validation.user.username,
-          firstName: validation.user.firstName
-        });
+    if (initDataToValidate && process.env.TELEGRAM_BOT_TOKEN) {
+      const { validateTelegramInitData } = await import('@/lib/telegram/validate');
+      const validation = await validateTelegramInitData(
+        initDataToValidate,
+        process.env.TELEGRAM_BOT_TOKEN
+      );
+
+      if (validation.valid && validation.user) {
+        telegramUserId = validation.user.id;
+
+        if (process.env.NODE_ENV === 'development') {
+          console.log('[Chat] Request from Telegram user:', {
+            id: validation.user.id,
+            username: validation.user.username,
+            firstName: validation.user.firstName
+          });
+        }
+      } else if (process.env.NODE_ENV === 'development') {
+        console.log('[Chat] Request without valid Telegram auth:', validation.error);
       }
-    } else if (process.env.NODE_ENV === 'development') {
-      console.log('[Chat] Request without valid Telegram auth:', validation.error);
     }
-
-    const body = await req.json();
-    const messages: UIMessage[] = body.messages;
 
     // Validate messages
     if (!messages || !Array.isArray(messages) || messages.length === 0) {
