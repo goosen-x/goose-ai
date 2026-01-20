@@ -166,4 +166,11 @@
   user-select: auto;
 }
 
+/* Предотвращаем авто-зум на iOS при фокусе на input/textarea */
+/* iOS зумит если font-size < 16px */
+input,
+textarea {
+  font-size: 1rem; /* 16px - предотвращает авто-зум на iOS */
+}
+
 @source '../node_modules/@llamaindex/chat-ui/**/*.{ts,tsx}';
