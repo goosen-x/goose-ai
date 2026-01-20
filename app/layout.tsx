@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Raleway } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { TelegramProvider } from "@/components/telegram/telegram-provider";
 import { TelegramThemeSync } from "@/components/telegram/telegram-theme-sync";
@@ -29,6 +30,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru" className={raleway.variable}>
+      <head>
+        <Script
+          src="https://telegram.org/js/telegram-web-app.js"
+          strategy="beforeInteractive"
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
