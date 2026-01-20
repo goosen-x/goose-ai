@@ -1,12 +1,10 @@
 "use client";
 
 import { useChat } from "@ai-sdk/react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   useTelegramViewport,
-  useTelegramBackButton,
   useTelegramHaptic,
-  useTelegramMiniApp,
   useIsInTelegram,
 } from "@/lib/telegram/hooks";
 import {
@@ -36,22 +34,7 @@ export default function ChatPage() {
   // Telegram hooks
   const isInTelegram = useIsInTelegram();
   const { height } = useTelegramViewport();
-  const { show: showBackButton, onClick: onBackClick } = useTelegramBackButton();
   const { impactLight, notificationSuccess, notificationError } = useTelegramHaptic();
-  const { close } = useTelegramMiniApp();
-
-  // Настройка back button (только в Telegram)
-  useEffect(() => {
-    if (!isInTelegram) return;
-
-    showBackButton();
-    const unsubscribe = onBackClick(() => {
-      // При нажатии на кнопку Назад закрываем Mini App
-      close();
-    });
-
-    return unsubscribe;
-  }, [isInTelegram, showBackButton, onBackClick, close]);
 
   const handleSubmit = (message: PromptInputMessage) => {
     const hasText = Boolean(message.text);
@@ -81,13 +64,11 @@ export default function ChatPage() {
       className="flex flex-col"
       style={isInTelegram && height ? { height: `${height}px` } : { height: "calc(100vh - 4rem)" }}
     >
-      {/* Header - показываем только в браузере */}
-      {!isInTelegram && (
-        <header className="flex items-center justify-between border-b px-4 py-3">
-          <h1 className="text-lg font-semibold">Goose AI 🦆</h1>
-          <span className="text-sm text-muted-foreground">Beta</span>
-        </header>
-      )}
+      {/* Header */}
+      <header className="flex items-center justify-between border-b px-4 py-3">
+        <h1 className="text-lg font-semibold">Goose AI 🦆</h1>
+        <span className="text-sm text-muted-foreground">Beta</span>
+      </header>
 
       {/* Conversation */}
       <Conversation className="flex-1">
